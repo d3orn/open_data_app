@@ -9,3 +9,4 @@ bower_components/*
 gulpfile.js
 bower_resources.json
 scripts/*
+package.json
