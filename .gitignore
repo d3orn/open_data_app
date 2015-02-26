@@ -1,0 +1,11 @@
+node_modules/*
+bower_components/*
+.sass-cache
+.DS_Store
+*.swp
+*.swo
+*.log
+
+gulpfile.js
+bower_resources.json
+scripts/*
