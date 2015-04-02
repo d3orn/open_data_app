@@ -1,0 +1,22 @@
+{
+  "name": "Open Data",
+  "version": "1.0.0",
+  "authors": [
+    "Fabian Reding",
+    "Dominique Rahm"
+  ],
+  "description": "Open Data App",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "topojson": "~1.6.18",
+    "d3": "~3.5.5"
+  }
+}
