@@ -1,0 +1,111 @@
+{
+  "type": "Regions",
+  "regions": [
+    {
+      "name": "Westschweiz",
+      "color": "#148dfa",
+      "origin": "-120, -72",
+      "cantons": [
+        {
+          "name": "JU"
+        },
+        {
+          "name": "NE"
+        },
+        {
+          "name": "FR"
+        },
+        {
+          "name": "VD"
+        },
+        {
+          "name": "GE"
+        },
+        {
+          "name": "VS"
+        }
+      ]
+    },
+    {
+      "name": "Mittelland",
+      "color": "#c23b22",
+      "origin": "-265, -45",
+      "cantons": [
+        {
+          "name": "BL"
+        },
+        {
+          "name": "BS"
+        },
+        {
+          "name": "SO"
+        },
+        {
+          "name": "BE"
+        },
+        {
+          "name": "AG"
+        }
+      ]
+    },
+    {
+      "name":"Zentralschweiz",
+      "color": "#03c03c",
+      "origin": "-415, -120",
+      "cantons": [
+        {
+          "name": "LU"
+        },
+        {
+          "name": "ZG"
+        },
+        {
+          "name": "SZ"
+        },
+        {
+          "name": "OW"
+        },
+        {
+          "name": "NW"
+        },
+        {
+          "name": "UR"
+        },
+        {
+          "name": "TI"
+        }
+      ]
+    },
+    {
+      "name":"Ostschweiz",
+      "color": "#ffd526",
+      "origin": "-497, -2",
+      "cantons": [
+        {
+          "name": "GR"
+        },
+        {
+          "name": "GL"
+        },
+        {
+          "name": "SG"
+        },
+        {
+          "name": "AR"
+        },
+        {
+          "name": "AI"
+        },
+        {
+          "name": "TG"
+        },
+        {
+          "name": "ZH"
+        },
+        {
+          "name": "SH"
+        }
+      ]
+    }
+  ]
+}
