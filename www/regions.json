@@ -5,6 +5,7 @@
       "name": "Westschweiz",
       "color": "#148dfa",
       "origin": "-120, -72",
+      "width": "400",
       "cantons": [
         {
           "name": "JU"
@@ -30,6 +31,7 @@
       "name": "Mittelland",
       "color": "#c23b22",
       "origin": "-265, -45",
+      "width": "250",
       "cantons": [
         {
           "name": "BL"
@@ -52,6 +54,7 @@
       "name":"Zentralschweiz",
       "color": "#03c03c",
       "origin": "-415, -120",
+      "width": "215",
       "cantons": [
         {
           "name": "LU"
@@ -78,8 +81,9 @@
     },
     {
       "name":"Ostschweiz",
-      "color": "#ffd526",
+      "color": "#8b247d",
       "origin": "-497, -2",
+      "width": "340",
       "cantons": [
         {
           "name": "GR"

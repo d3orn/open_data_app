@@ -13,23 +13,24 @@ html
             ul
         ul#selector.stack-for-small.button-group
             li
-                a.button.active(href='#', onclick='show(this)', data-region='mittelland') Mittelland
+                a.button(href='#', onclick='show(this)', data-region='Westschweiz') Westschweiz
             li
-                a.button(href='#', onclick='show(this)', data-region='ostschweiz') Ostschweiz
+                a.button.active(href='#', onclick='show(this)', data-region='Mittelland') Mittelland
             li
-                a.button(href='#', onclick='show(this)', data-region='westschweiz') Westschweiz
+                a.button(href='#', onclick='show(this)', data-region='Zentralschweiz') Zentralschweiz
             li
-                a.button(href='#', onclick='show(this)', data-region='zentralschweiz') Zentralschweiz
+                a.button(href='#', onclick='show(this)', data-region='Ostschweiz') Ostschweiz
 
         //- radio für frau/mann
 
         svg
-            g#zentralschweiz(transform="translate(-415, -120)")
-            g#mittelland(transform="translate(-265,-45)")
-            g#ostschweiz(transform="translate(-497,-2)")
-            g#westschweiz(transform="translate(-120,-72)")
+            g#Zentralschweiz(transform="translate(-415, -120)")
+            g#Mittelland(transform="translate(-265,-45)")
+            g#Ostschweiz(transform="translate(-497,-2)")
+            g#Westschweiz(transform="translate(-120,-72)")
 
 
     script(src="js/d3.min.js")
     script(src="js/topojson.js")
+    script(src="js/jquery.min.js")
     script(src="js/app.js")

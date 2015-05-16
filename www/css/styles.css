@@ -5673,8 +5673,31 @@ th.hide-for-touch {
 svg {
   display: block;
   width: 95%;
-  height: 480px;
-  margin: 0 auto; }
+  height: 500px;
+  margin: 15px auto; }
   @media (min-width: 750px) {
     svg {
       width: 750px; } }
+
+g.text {
+  display: inline !important;
+  font-size: 11px; }
+
+main {
+  overflow-y: scroll; }
+
+div.tip {
+  position: absolute;
+  text-align: center;
+  padding: 5px 10px;
+  background: black;
+  font-size: 12px;
+  line-height: 1.4;
+  color: white;
+  border: 0px;
+  border-radius: 8px;
+  pointer-events: none; }
+  div.tip h5 {
+    color: white; }
+  div.tip p {
+    margin-bottom: 0; }
