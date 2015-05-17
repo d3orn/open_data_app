@@ -1,36 +1,80 @@
 doctype
 html
-  head
-    meta(charset= "UTF-8")
-    title Document
-    meta(name='viewport', content='user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi')
-    link(rel="stylesheet", href="css/normalize.css")
-    link(rel="stylesheet", href="css/styles.css")
-    script(src="js/vendor/modernizr.js")
-  body
-    main(style="position:fixed; top:0;bottom:0;left:0;right:0")
-        div#info(style="position: fixed; left: 10px; top: 10px;")
-            ul
-        ul#selector.stack-for-small.button-group
-            li
-                a.button(href='#', onclick='show(this)', data-region='Westschweiz') Westschweiz
-            li
-                a.button.active(href='#', onclick='show(this)', data-region='Mittelland') Mittelland
-            li
-                a.button(href='#', onclick='show(this)', data-region='Zentralschweiz') Zentralschweiz
-            li
-                a.button(href='#', onclick='show(this)', data-region='Ostschweiz') Ostschweiz
+    head
+        meta(charset= "UTF-8")
+        title Document
+        meta(name='viewport', content='user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi')
+        link(rel="stylesheet", href="css/normalize.css")
+        link(rel="stylesheet", href="css/styles.css")
+        script(src="js/vendor/modernizr.js")
+    body
 
-        //- radio für frau/mann
+        .off-canvas-wrap(data-offcanvas='')
+            .inner-wrap
+                nav.tab-bar
+                  section.left-small
+                    a.left-off-canvas-toggle.menu-icon(href='#')
+                      span
+                  section.middle.tab-bar-section
+                    h1.title Open Data App
+                  section.right-small
+                    a.right-off-canvas-toggle(href='#')
+                    i.fi-widget
+                aside.left-off-canvas-menu
+                  ul.off-canvas-list
+                    li
+                      label Open Data
+                    li
+                      a(href='#') App
+                    li
+                      a(href='#') Idee
+                    li
+                      a(href='#') Über uns
+                aside.right-off-canvas-menu
+                  ul.off-canvas-list
+                    li
+                      label Region
+                    li
+                        a.button(href='#', onclick='show(this)', data-region='Westschweiz') Westschweiz
+                    li
+                        a.button.active(href='#', onclick='show(this)', data-region='Mittelland') Mittelland
+                    li
+                        a.button(href='#', onclick='show(this)', data-region='Zentralschweiz') Zentralschweiz
+                    li
+                        a.button(href='#', onclick='show(this)', data-region='Ostschweiz') Ostschweiz
+                    li
+                        label Typ
+                        select#type
+                          option(value="abt-total") Ausbildungstyp - Total
+                          option(value="EBA") EBA
+                          option(value="EFZ") EFZ
 
-        svg
-            g#Zentralschweiz(transform="translate(-415, -120)")
-            g#Mittelland(transform="translate(-265,-45)")
-            g#Ostschweiz(transform="translate(-497,-2)")
-            g#Westschweiz(transform="translate(-120,-72)")
+                    li
+                        label Geschlecht
+                        select#gender
+                          option(value="both") Beides
+                          option(value="women") Frauen
+                          option(value="men") Männer
+                    //- li
+                    //-     label Typ
+
+                main
+
+                svg
+                    g#Zentralschweiz(transform="translate(-415, -120)")
+                    g#Mittelland(transform="translate(-265,-45)")
+                    g#Ostschweiz(transform="translate(-497,-2)")
+                    g#Westschweiz(transform="translate(-120,-72)")
 
 
-    script(src="js/d3.min.js")
-    script(src="js/topojson.js")
-    script(src="js/jquery.min.js")
-    script(src="js/app.js")
+                a.exit-off-canvas
+
+
+
+        script(src="js/d3.min.js")
+        script(src="js/topojson.js")
+        script(src="js/jquery.min.js")
+        script(src="js/foundation.min.js")
+        script(src="js/foundation.offcanvas.js")
+        script(src="js/app.js")
+        script $(document).foundation();

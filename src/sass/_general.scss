@@ -1,3 +1,7 @@
+.off-canvas-wrap, .inner-wrap{
+  height: 100%;
+}
+
 #selector{
   position: fixed;
   top: 10px;
@@ -11,6 +15,13 @@
   .button{
     @extend .tiny;
   }
+}
+
+i.fi-widget{
+  margin: 0 auto;
+  display: block;
+  width: 19px;
+  font-size: 22px;
 }
 
 svg{
@@ -32,6 +43,15 @@ g.text{
 // 750< svg anzeigen
 main{
   overflow-y: scroll;
+}
+
+// label{
+//   position: fixed;
+//   top: 50px;
+// }
+//
+.button{
+  margin: 0;
 }
 
 div.tip {

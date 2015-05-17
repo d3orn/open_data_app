@@ -22,6 +22,9 @@ d3.select(window).on 'resize', resize
 # Scale
 windowWidth = window.innerWidth
 
+$('.right-small').click ->
+  $('.off-canvas-wrap').foundation('offcanvas', 'show', 'move-left')
+
 # if windowWidth <= 750
 $(document).ready =>
   dataCounter = 0
@@ -106,6 +109,15 @@ addEventListner = ->
   .on 'mouseup', tooltipHide
   .on 'mouseout', tooltipHide
 
+  that = this
+  $('#type').change ->
+    that.type = $(this).val()
+    update()
+
+  $('#gender').change ->
+    that.gender = $(this).val()
+    update()
+
 combineData = ->
   for key, item of @cantonsObjects
     for year, data of item
@@ -173,11 +185,18 @@ drawRegion = (regionName) =>
     d.properties.abbr
 
 update = ->
+  console.log @regions
   for name, region of @regions
     features = region.features
     max = 0
     min = 0
     for feature in features
+      console.log feature
+      console.log @year
+      console.log @field
+      console.log @type
+      console.log @gender
+
       value = parseInt feature.properties[@year][@field][@type][@gender][@value]
       if value >= max
         max = value
@@ -199,6 +218,7 @@ show = (elem) ->
   region = elem.getAttribute('data-region')
   d3.selectAll('g').style("display", "none")
   @svg.select('#' + region).style("display", "block")
+  # $('.off-canvas-wrap').foundation('offcanvas', 'hide', 'move-left')
 
 resize = ->
   # adjust things when the window size chan

@@ -51,6 +51,10 @@ d3.select(window).on('resize', resize);
 
 windowWidth = window.innerWidth;
 
+$('.right-small').click(function() {
+  return $('.off-canvas-wrap').foundation('offcanvas', 'show', 'move-left');
+});
+
 $(document).ready((function(_this) {
   return function() {
     var dataCounter, index, ref, year;
@@ -169,7 +173,17 @@ draw = function() {
 };
 
 addEventListner = function() {
-  return this.svg.selectAll('path.canton').on('mousedown', tooltipShow).on('mouseover', tooltipShow).on('click', tooltipShow).on('mouseup', tooltipHide).on('mouseout', tooltipHide);
+  var that;
+  this.svg.selectAll('path.canton').on('mousedown', tooltipShow).on('mouseover', tooltipShow).on('click', tooltipShow).on('mouseup', tooltipHide).on('mouseout', tooltipHide);
+  that = this;
+  $('#type').change(function() {
+    that.type = $(this).val();
+    return update();
+  });
+  return $('#gender').change(function() {
+    that.gender = $(this).val();
+    return update();
+  });
 };
 
 combineData = function() {
@@ -237,6 +251,7 @@ drawRegion = (function(_this) {
 
 update = function() {
   var color, feature, features, j, len, max, min, name, ref, region, results, scale, value;
+  console.log(this.regions);
   ref = this.regions;
   results = [];
   for (name in ref) {
@@ -246,6 +261,11 @@ update = function() {
     min = 0;
     for (j = 0, len = features.length; j < len; j++) {
       feature = features[j];
+      console.log(feature);
+      console.log(this.year);
+      console.log(this.field);
+      console.log(this.type);
+      console.log(this.gender);
       value = parseInt(feature.properties[this.year][this.field][this.type][this.gender][this.value]);
       if (value >= max) {
         max = value;
