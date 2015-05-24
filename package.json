@@ -5,6 +5,7 @@
   "author": "Fabian Reding & Dominique Rahm",
   "license": "MIT",
   "dependencies": {
+    "gulp-autoprefixer": "^2.3.0",
     "http-server": "^0.8.0",
     "serve": "^1.4.0"
   },

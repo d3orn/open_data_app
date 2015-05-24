@@ -47,8 +47,7 @@ $(document).ready =>
 loadJSON = ->
   deffered = jQuery.Deferred()
 
-  d3.json "10-14.json.gz", (d) ->
-    console.log d
+  d3.json "10-14.json", (d) ->
     @cantonsObjects = d
     deffered.resolve()
   deffered.promise()
