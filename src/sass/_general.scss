@@ -117,6 +117,9 @@ div.tip {
   li{
     font-size: 30px;
   }
+  &.single{
+    justify-content: center;
+  }
 }
 
 .info{
