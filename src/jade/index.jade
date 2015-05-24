@@ -25,11 +25,11 @@ html
                     li
                       label Open Data
                     li
-                      a(href='#') App
+                      a(href='/') App
                     li
-                      a(href='#') Idee
+                      a(href='idea.html') Idee
                     li
-                      a(href='#') Über uns
+                      a(href='about.html') Über uns
                 aside.right-off-canvas-menu
                   ul.off-canvas-list
                     li
@@ -37,17 +37,25 @@ html
                     li
                         a.button(href='#', onclick='show(this)', data-region='Westschweiz') Westschweiz
                     li
-                        a.button.active(href='#', onclick='show(this)', data-region='Mittelland') Mittelland
+                        a.button(href='#', onclick='show(this)', data-region='Mittelland') Mittelland
                     li
                         a.button(href='#', onclick='show(this)', data-region='Zentralschweiz') Zentralschweiz
                     li
                         a.button(href='#', onclick='show(this)', data-region='Ostschweiz') Ostschweiz
                     li
+                        label Jahr
+                        select#year
+
+                        label Branche
+                        select#field
+                            //- add options automatically
+
                         label Typ
                         select#type
                           option(value="abt-total") Ausbildungstyp - Total
-                          option(value="EBA") EBA
-                          option(value="EFZ") EFZ
+                          option(value="EFZ") EFZ: Eidg. Fähigkeitszeugnis
+                          option(value="EBA") EBA: Eidg. Berufsattest
+                          //- option(value="nReglementiert") nicht Relementiert
 
                     li
                         label Geschlecht
@@ -55,16 +63,38 @@ html
                           option(value="both") Beides
                           option(value="women") Frauen
                           option(value="men") Männer
-                    //- li
-                    //-     label Typ
 
                 main
 
-                svg
-                    g#Zentralschweiz(transform="translate(-415, -120)")
-                    g#Mittelland(transform="translate(-265,-45)")
-                    g#Ostschweiz(transform="translate(-497,-2)")
-                    g#Westschweiz(transform="translate(-120,-72)")
+                    .info
+                        ul#scale
+                            li
+                                .box
+                                .content
+                            li
+                                .box
+                                .content
+                            li
+                                .box
+                                .content
+                            li
+                                .box
+                                .content
+                            li
+                                .box
+                                .content
+                        p
+                            | Jeweils eine Schweizer Region und die gefilterten Daten sind sichtbar
+                            br
+                            | Um die Auswahl bzw. die verschiedenen Filter zu ändern einfach oben rechts
+                            | auf das Zahnrad klicken um zu den Einstellungen zu gelangen.
+
+                    svg
+                        g#Zentralschweiz(transform="translate(-415, -120)")
+                        g#Mittelland(transform="translate(-265,-45)")
+                        g#Ostschweiz(transform="translate(-497,-2)")
+                        g#Westschweiz(transform="translate(-120,-72)")
+
 
 
                 a.exit-off-canvas

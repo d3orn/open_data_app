@@ -1,0 +1,65 @@
+.off-canvas-wrap(data-offcanvas='')
+    .inner-wrap
+        nav.tab-bar
+          section.left-small
+            a.left-off-canvas-toggle.menu-icon(href='#')
+              span
+          section.middle.tab-bar-section
+            h1.title Open Data App
+          section.right-small
+            a.right-off-canvas-toggle(href='#')
+            i.fi-widget
+        aside.left-off-canvas-menu
+          ul.off-canvas-list
+            li
+              label Open Data
+            li
+              a(href='/') App
+            li
+              a(href='#') Idee
+            li
+              a(href='about.html') Über uns
+        aside.right-off-canvas-menu
+          ul.off-canvas-list
+            li
+              label Region
+            li
+                a.button(href='#', onclick='show(this)', data-region='Westschweiz') Westschweiz
+            li
+                a.button.active(href='#', onclick='show(this)', data-region='Mittelland') Mittelland
+            li
+                a.button(href='#', onclick='show(this)', data-region='Zentralschweiz') Zentralschweiz
+            li
+                a.button(href='#', onclick='show(this)', data-region='Ostschweiz') Ostschweiz
+            li
+                label Branche
+                //- select#type
+                //-   option(value="abt-total") Ausbildungstyp - Total
+                //-   option(value="EBA") EBA
+                //-   option(value="EFZ") EFZ
+
+                label Jahr
+                select#year
+                  option(value="2010") 2010
+                  option(value="2011") 2011
+                  option(value="2012") 2012
+                  option(value="2013") 2013
+                  option(value="2014") 2014
+
+                label Branche
+                select#field
+                    //- add options automatically
+
+                label Typ
+                select#type
+                  option(value="abt-total") Ausbildungstyp - Total
+                  option(value="EBA") EBA
+                  option(value="EFZ") EFZ
+                  //- option(value="nReglementiert") nicht Relementiert
+
+            li
+                label Geschlecht
+                select#gender
+                  option(value="both") Beides
+                  option(value="women") Frauen
+                  option(value="men") Männer

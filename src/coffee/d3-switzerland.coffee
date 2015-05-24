@@ -6,6 +6,7 @@
 @value = 'total'
 
 @regions = []
+@active = 'Westschweiz'
 
 @cantonsObjects = {'ZH' : {},'BE' : {},'LU' : {},'UR' : {},'SZ' : {},'OW' : {},'NW' : {},'GL' : {},
 'ZG' : {},'FR' : {},'SO' : {},'BS' : {},'BL' : {},'SH' : {},'AR' : {},'AI' : {},'SG' : {},'GR' : {},'AG' : {},
@@ -17,8 +18,6 @@ tip = d3.select("body").append("div")
     .attr("class", "tip")
     .style("opacity", 0);
 
-d3.select(window).on 'resize', resize
-
 # Scale
 windowWidth = window.innerWidth
 
@@ -27,17 +26,32 @@ $('.right-small').click ->
 
 # if windowWidth <= 750
 $(document).ready =>
+
   dataCounter = 0
   for index, year of @years
-    console.log year
-    # loadData year. then ->
-    #   dataCounter++
-    #   if dataCounter is @years.length
-    #     loadMap()
-  loadData(2014).then ->
+    $('#year').append($('<option/>', {
+        value: year,
+        text : year
+    }))
+  loadJSON().then =>
     loadSwitzerland().then ->
       loadRegions().then ->
         draw()
+    # loadData(year).then =>
+    #   dataCounter++
+    #   if dataCounter is @years.length
+    #     loadSwitzerland().then ->
+    #       loadRegions().then ->
+    #         draw()
+
+loadJSON = ->
+  deffered = jQuery.Deferred()
+
+  d3.json "10-14.json.gz", (d) ->
+    console.log d
+    @cantonsObjects = d
+    deffered.resolve()
+  deffered.promise()
 
 loadData = (year) ->
   deffered = jQuery.Deferred()
@@ -81,7 +95,7 @@ loadRegions = () ->
 
     for key, region of @all_regions
       region_names.push(region.name)
-      @regions[region.name] = {features: [], color: region.color, origin: region.origin}
+      @regions[region.name] = {features: [], color: region.color, origin: region.origin, width: region.origWidth, height: region.origHeight}
     deffered.resolve()
   deffered.promise()
 
@@ -93,6 +107,7 @@ draw = ->
   for name of @regions
     drawRegion(name)
 
+  updateFields()
   update()
   resize()
 
@@ -102,6 +117,8 @@ draw = ->
   addEventListner()
 
 addEventListner = ->
+  d3.select(window).on 'resize', resize
+
   @svg.selectAll 'path.canton'
   .on 'mousedown', tooltipShow
   .on 'mouseover', tooltipShow
@@ -109,7 +126,23 @@ addEventListner = ->
   .on 'mouseup', tooltipHide
   .on 'mouseout', tooltipHide
 
+  @svg.selectAll 'text'
+  .on 'mousedown', tooltipShow
+  .on 'mouseover', tooltipShow
+  .on 'click', tooltipShow
+  .on 'mouseup', tooltipHide
+  .on 'mouseout', tooltipHide
+
   that = this
+  $('#year').change ->
+    that.year = $(this).val()
+    updateFields()
+    update()
+
+  $('#field').change ->
+    that.field = $(this).val()
+    update()
+
   $('#type').change ->
     that.type = $(this).val()
     update()
@@ -131,36 +164,6 @@ combineData = ->
                 canton.properties['region'] = region.name
                 @regions[region.name].features.push canton
 
-
-
-
-
-      # for region in regions
-#   for canton in regions.cantons
-#     draw canton and add data
-
-    # d3.select('#selector').selectAll('button').data(d3.keys(data[0])).enter().append('button').text(String).on 'click', (key) ->
-    #   scale = d3.scale.linear().domain(d3.extent(data, (d) ->
-    #     d[key]
-    #   )).range([
-    #     1
-    #     0.5
-    #   ])
-    #   console.log scale.domain()
-    #   hue = Math.random() * 360
-    #   d3.selectAll('path.canton').transition().attr 'fill', (d) ->
-    #     d3.hsl hue, 1, scale(d.properties[key])
-    #   d3.selectAll('text').attr('transform', (d) ->
-    #     'translate(30,-30)scale(2)rotate(30)'
-    #   ).transition().ease('bounce').delay((d, i) ->
-    #     i * 50
-    #   ).attr 'transform', (d) ->
-    #     'translate(0,0)scale(' + 1.5 - scale(d.properties[key]) + ')rotate(0)'
-    #   return
-
-    # return
-  # return
-
 drawRegion = (regionName) =>
   features = @regions[regionName].features
   @svg.select("##{regionName}").selectAll('path.canton').data(features)
@@ -181,22 +184,16 @@ drawRegion = (regionName) =>
     center[0] = center[0] - 5
     'translate('+center+')'
   .append('text')
+  .style('fill', '#FFF')
   .text (d) ->
     d.properties.abbr
 
 update = ->
-  console.log @regions
   for name, region of @regions
     features = region.features
     max = 0
     min = 0
     for feature in features
-      console.log feature
-      console.log @year
-      console.log @field
-      console.log @type
-      console.log @gender
-
       value = parseInt feature.properties[@year][@field][@type][@gender][@value]
       if value >= max
         max = value
@@ -205,47 +202,70 @@ update = ->
 
     color = d3.rgb region.color
 
-    scale = d3.scale.linear()
+    scale = d3.scale.quantize()
             .domain([min, max])
-            .range([color.brighter(2), color.brighter(1), color, color.darker(1), color.darker(2)]);
+            .range([color.brighter(3), color.brighter(1), color, color.darker(1), color.darker(3)]);
+
+    if min is max
+      scale = (int) -> color.brighter(3)
+
+    if name is @active
+      $('#scale').children().each (index, item) ->
+        step = max/5*index
+        nextStep = max/5*(index+1)
+        if step is nextStep
+          $(item).find('.box').css("background-color", scale(step))
+          $(item).find('.content').html("<p>#{parseInt step}</p>")
+          $('#scale li').not(item).hide()
+          return false
+        else
+          $(item).show()
+          $(item).find('.box').css("background-color", scale(step))
+          $(item).find('.content').html("<p>#{parseInt step} - #{parseInt(nextStep)}</p>")
 
     @svg.select("##{name}").selectAll('path.canton').data(features)
     .style 'fill', (d) =>
       value = parseInt d.properties[@year][@field][@type][@gender][@value]
       d3.rgb(scale(value))
 
+updateFields = ->
+  fields = @cantonsObjects['BE'][year]
+  for field of fields
+    $('#field').append($('<option/>', {
+      value: field,
+      text : field
+    }))
+
+  $("[data-region=#{@active}]").addClass('active')
+  $("#year").val(@year)
+  $("#field").val(@field)
+  $("#type").val(@type)
+  $("#gender").val(@gender)
+
 show = (elem) ->
+  $(elem).addClass('active')
+  $('.button').not(elem).removeClass('active')
   region = elem.getAttribute('data-region')
+  @active = region
   d3.selectAll('g').style("display", "none")
   @svg.select('#' + region).style("display", "block")
+  update()
   # $('.off-canvas-wrap').foundation('offcanvas', 'hide', 'move-left')
 
 resize = ->
-  # adjust things when the window size chan
-  width = parseInt(svg.style('width'))
-
-  console.log width
-
-  # scale each individual object according to theire own width/height and
-  # window width/height
-  # d3.selectAll("g").attr("transform", "scale(" + width / 600 + "), translate(" + width / 2 + ", 0)");
-  # probably all regions need ratio and translate
+  width = parseInt(svg.style('width')) - 15
+  height = parseInt(svg.style('height')) - 15
 
   # translate(-centerX*(factor-1), -centerY*(factor-1))
   # scale(factor)
   # ratio = 1.25
   # ratio = 1.25 if window.innerWidth <= 750
+  for name, region of @regions
+    widthRatio = width / parseInt(region.width)
+    heightRatio = height / parseInt(region.height)
+    ratio = Math.min(widthRatio, heightRatio)
+    @svg.select("##{name}").attr("transform", "scale(" + ratio + "), translate(" + region.origin + ")");
 
-  @svg.select('#Zentralschweiz').attr("transform", "scale(" + width/212 + "), translate(" + @regions['Zentralschweiz'].origin + ")");
-  @svg.select('#Mittelland').attr("transform", "scale(" + width/300 + "), translate(" + @regions['Mittelland'].origin + ")");
-  @svg.select('#Ostschweiz').attr("transform", "scale(" + width/340 + "), translate(" + @regions['Ostschweiz'].origin + ")");
-  @svg.select('#Westschweiz').attr("transform", "scale(" + width/400 + "), translate(" + @regions['Westschweiz'].origin + ")");
-
-
-  # map.style('width', width + 'px').style 'height', height + 'px'
-  # # resize the map
-  # map.select('.land').attr 'd', path
-  # map.selectAll('.state').attr 'd', path
   return
 
 tooltipShow = (d, i) =>
@@ -259,6 +279,7 @@ tooltipShow = (d, i) =>
   .duration 200
   .style 'opacity', .9
   tip.html "<h5>#{name}</h5>
+           <p>#{@field} / #{@type}</p>
            <p>#{value}</p>"
   .style("left", (d3.event.pageX) + "px")
   .style("top", (d3.event.pageY - 28) + "px");

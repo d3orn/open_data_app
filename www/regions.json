@@ -5,7 +5,8 @@
       "name": "Westschweiz",
       "color": "#148dfa",
       "origin": "-120, -72",
-      "width": "400",
+      "origHeight": "377",
+      "origWidth": "400",
       "cantons": [
         {
           "name": "JU"
@@ -31,7 +32,8 @@
       "name": "Mittelland",
       "color": "#c23b22",
       "origin": "-265, -45",
-      "width": "250",
+      "origHeight": "297",
+      "origWidth": "250",
       "cantons": [
         {
           "name": "BL"
@@ -53,8 +55,9 @@
     {
       "name":"Zentralschweiz",
       "color": "#03c03c",
-      "origin": "-415, -120",
-      "width": "215",
+      "origin": "-415, -130",
+      "origHeight": "334",
+      "origWidth": "212",
       "cantons": [
         {
           "name": "LU"
@@ -83,7 +86,8 @@
       "name":"Ostschweiz",
       "color": "#8b247d",
       "origin": "-497, -2",
-      "width": "340",
+      "origHeight": "373",
+      "origWidth": "339",
       "cantons": [
         {
           "name": "GR"

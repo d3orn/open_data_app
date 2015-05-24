@@ -1,4 +1,4 @@
-var addEventListner, combineData, draw, drawRegion, loadData, loadRegions, loadSwitzerland, resize, show, tip, tooltipHide, tooltipShow, update, windowWidth;
+var addEventListner, combineData, draw, drawRegion, loadData, loadJSON, loadRegions, loadSwitzerland, resize, show, tip, tooltipHide, tooltipShow, update, updateFields, windowWidth;
 
 this.years = [2010, 2011, 2012, 2013, 2014];
 
@@ -13,6 +13,8 @@ this.gender = 'both';
 this.value = 'total';
 
 this.regions = [];
+
+this.active = 'Westschweiz';
 
 this.cantonsObjects = {
   'ZH': {},
@@ -47,8 +49,6 @@ this.svg = d3.select('svg');
 
 tip = d3.select("body").append("div").attr("class", "tip").style("opacity", 0);
 
-d3.select(window).on('resize', resize);
-
 windowWidth = window.innerWidth;
 
 $('.right-small').click(function() {
@@ -62,9 +62,12 @@ $(document).ready((function(_this) {
     ref = _this.years;
     for (index in ref) {
       year = ref[index];
-      console.log(year);
+      $('#year').append($('<option/>', {
+        value: year,
+        text: year
+      }));
     }
-    return loadData(2014).then(function() {
+    return loadJSON().then(function() {
       return loadSwitzerland().then(function() {
         return loadRegions().then(function() {
           return draw();
@@ -73,6 +76,17 @@ $(document).ready((function(_this) {
     });
   };
 })(this));
+
+loadJSON = function() {
+  var deffered;
+  deffered = jQuery.Deferred();
+  d3.json("10-14.json.gz", function(d) {
+    console.log(d);
+    this.cantonsObjects = d;
+    return deffered.resolve();
+  });
+  return deffered.promise();
+};
 
 loadData = function(year) {
   var deffered;
@@ -150,7 +164,9 @@ loadRegions = function() {
       this.regions[region.name] = {
         features: [],
         color: region.color,
-        origin: region.origin
+        origin: region.origin,
+        width: region.origWidth,
+        height: region.origHeight
       };
     }
     return deffered.resolve();
@@ -165,6 +181,7 @@ draw = function() {
   for (name in this.regions) {
     drawRegion(name);
   }
+  updateFields();
   update();
   resize();
   d3.selectAll('g').style("display", "none");
@@ -174,8 +191,19 @@ draw = function() {
 
 addEventListner = function() {
   var that;
+  d3.select(window).on('resize', resize);
   this.svg.selectAll('path.canton').on('mousedown', tooltipShow).on('mouseover', tooltipShow).on('click', tooltipShow).on('mouseup', tooltipHide).on('mouseout', tooltipHide);
+  this.svg.selectAll('text').on('mousedown', tooltipShow).on('mouseover', tooltipShow).on('click', tooltipShow).on('mouseup', tooltipHide).on('mouseout', tooltipHide);
   that = this;
+  $('#year').change(function() {
+    that.year = $(this).val();
+    updateFields();
+    return update();
+  });
+  $('#field').change(function() {
+    that.field = $(this).val();
+    return update();
+  });
   $('#type').change(function() {
     that.type = $(this).val();
     return update();
@@ -243,7 +271,7 @@ drawRegion = (function(_this) {
       center = path.centroid(d);
       center[0] = center[0] - 5;
       return 'translate(' + center + ')';
-    }).append('text').text(function(d) {
+    }).append('text').style('fill', '#FFF').text(function(d) {
       return d.properties.abbr;
     });
   };
@@ -251,7 +279,6 @@ drawRegion = (function(_this) {
 
 update = function() {
   var color, feature, features, j, len, max, min, name, ref, region, results, scale, value;
-  console.log(this.regions);
   ref = this.regions;
   results = [];
   for (name in ref) {
@@ -261,11 +288,6 @@ update = function() {
     min = 0;
     for (j = 0, len = features.length; j < len; j++) {
       feature = features[j];
-      console.log(feature);
-      console.log(this.year);
-      console.log(this.field);
-      console.log(this.type);
-      console.log(this.gender);
       value = parseInt(feature.properties[this.year][this.field][this.type][this.gender][this.value]);
       if (value >= max) {
         max = value;
@@ -275,7 +297,29 @@ update = function() {
       }
     }
     color = d3.rgb(region.color);
-    scale = d3.scale.linear().domain([min, max]).range([color.brighter(2), color.brighter(1), color, color.darker(1), color.darker(2)]);
+    scale = d3.scale.quantize().domain([min, max]).range([color.brighter(3), color.brighter(1), color, color.darker(1), color.darker(3)]);
+    if (min === max) {
+      scale = function(int) {
+        return color.brighter(3);
+      };
+    }
+    if (name === this.active) {
+      $('#scale').children().each(function(index, item) {
+        var nextStep, step;
+        step = max / 5 * index;
+        nextStep = max / 5 * (index + 1);
+        if (step === nextStep) {
+          $(item).find('.box').css("background-color", scale(step));
+          $(item).find('.content').html("<p>" + (parseInt(step)) + "</p>");
+          $('#scale li').not(item).hide();
+          return false;
+        } else {
+          $(item).show();
+          $(item).find('.box').css("background-color", scale(step));
+          return $(item).find('.content').html("<p>" + (parseInt(step)) + " - " + (parseInt(nextStep)) + "</p>");
+        }
+      });
+    }
     results.push(this.svg.select("#" + name).selectAll('path.canton').data(features).style('fill', (function(_this) {
       return function(d) {
         value = parseInt(d.properties[_this.year][_this.field][_this.type][_this.gender][_this.value]);
@@ -286,21 +330,45 @@ update = function() {
   return results;
 };
 
+updateFields = function() {
+  var field, fields;
+  fields = this.cantonsObjects['BE'][year];
+  for (field in fields) {
+    $('#field').append($('<option/>', {
+      value: field,
+      text: field
+    }));
+  }
+  $("[data-region=" + this.active + "]").addClass('active');
+  $("#year").val(this.year);
+  $("#field").val(this.field);
+  $("#type").val(this.type);
+  return $("#gender").val(this.gender);
+};
+
 show = function(elem) {
   var region;
+  $(elem).addClass('active');
+  $('.button').not(elem).removeClass('active');
   region = elem.getAttribute('data-region');
+  this.active = region;
   d3.selectAll('g').style("display", "none");
-  return this.svg.select('#' + region).style("display", "block");
+  this.svg.select('#' + region).style("display", "block");
+  return update();
 };
 
 resize = function() {
-  var width;
-  width = parseInt(svg.style('width'));
-  console.log(width);
-  this.svg.select('#Zentralschweiz').attr("transform", "scale(" + width / 212 + "), translate(" + this.regions['Zentralschweiz'].origin + ")");
-  this.svg.select('#Mittelland').attr("transform", "scale(" + width / 300 + "), translate(" + this.regions['Mittelland'].origin + ")");
-  this.svg.select('#Ostschweiz').attr("transform", "scale(" + width / 340 + "), translate(" + this.regions['Ostschweiz'].origin + ")");
-  this.svg.select('#Westschweiz').attr("transform", "scale(" + width / 400 + "), translate(" + this.regions['Westschweiz'].origin + ")");
+  var height, heightRatio, name, ratio, ref, region, width, widthRatio;
+  width = parseInt(svg.style('width')) - 15;
+  height = parseInt(svg.style('height')) - 15;
+  ref = this.regions;
+  for (name in ref) {
+    region = ref[name];
+    widthRatio = width / parseInt(region.width);
+    heightRatio = height / parseInt(region.height);
+    ratio = Math.min(widthRatio, heightRatio);
+    this.svg.select("#" + name).attr("transform", "scale(" + ratio + "), translate(" + region.origin + ")");
+  }
 };
 
 tooltipShow = (function(_this) {
@@ -310,7 +378,7 @@ tooltipShow = (function(_this) {
     value = data[_this.year][_this.field][_this.type][_this.gender][_this.value];
     name = data.name.replace('Ã¨', 'è').replace('Ã¢', 'â').replace('Ã¼', 'ü');
     tip.transition().duration(200).style('opacity', .9);
-    return tip.html("<h5>" + name + "</h5> <p>" + value + "</p>").style("left", d3.event.pageX + "px").style("top", (d3.event.pageY - 28) + "px");
+    return tip.html("<h5>" + name + "</h5> <p>" + _this.field + " / " + _this.type + "</p> <p>" + value + "</p>").style("left", d3.event.pageX + "px").style("top", (d3.event.pageY - 28) + "px");
   };
 })(this);
 

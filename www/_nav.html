@@ -1,0 +1,61 @@
+
+<div data-offcanvas="" class="off-canvas-wrap">
+  <div class="inner-wrap">
+    <nav class="tab-bar">
+      <section class="left-small"><a href="#" class="left-off-canvas-toggle menu-icon"><span></span></a></section>
+      <section class="middle tab-bar-section">
+        <h1 class="title">Open Data App</h1>
+      </section>
+      <section class="right-small"><a href="#" class="right-off-canvas-toggle"></a><i class="fi-widget"></i></section>
+    </nav>
+    <aside class="left-off-canvas-menu">
+      <ul class="off-canvas-list">
+        <li>
+          <label>Open Data</label>
+        </li>
+        <li><a href="/">App</a></li>
+        <li><a href="#">Idee</a></li>
+        <li><a href="about.html">Über uns</a></li>
+      </ul>
+    </aside>
+    <aside class="right-off-canvas-menu">
+      <ul class="off-canvas-list">
+        <li>
+          <label>Region</label>
+        </li>
+        <li><a href="#" onclick="show(this)" data-region="Westschweiz" class="button">Westschweiz</a></li>
+        <li><a href="#" onclick="show(this)" data-region="Mittelland" class="button active">Mittelland</a></li>
+        <li><a href="#" onclick="show(this)" data-region="Zentralschweiz" class="button">Zentralschweiz</a></li>
+        <li><a href="#" onclick="show(this)" data-region="Ostschweiz" class="button">Ostschweiz</a></li>
+        <li>
+          <label>Branche</label>
+          <label>Jahr</label>
+          <select id="year">
+            <option value="2010">2010</option>
+            <option value="2011">2011</option>
+            <option value="2012">2012</option>
+            <option value="2013">2013</option>
+            <option value="2014">2014</option>
+          </select>
+          <label>Branche</label>
+          <select id="field">
+          </select>
+          <label>Typ</label>
+          <select id="type">
+            <option value="abt-total">Ausbildungstyp - Total</option>
+            <option value="EBA">EBA</option>
+            <option value="EFZ">EFZ</option>
+          </select>
+        </li>
+        <li>
+          <label>Geschlecht</label>
+          <select id="gender">
+            <option value="both">Beides</option>
+            <option value="women">Frauen</option>
+            <option value="men">Männer</option>
+          </select>
+        </li>
+      </ul>
+    </aside>
+  </div>
+</div>

@@ -23,9 +23,9 @@
             <li>
               <label>Open Data</label>
             </li>
-            <li><a href="#">App</a></li>
-            <li><a href="#">Idee</a></li>
-            <li><a href="#">Über uns</a></li>
+            <li><a href="/">App</a></li>
+            <li><a href="idea.html">Idee</a></li>
+            <li><a href="about.html">Über uns</a></li>
           </ul>
         </aside>
         <aside class="right-off-canvas-menu">
@@ -34,15 +34,20 @@
               <label>Region</label>
             </li>
             <li><a href="#" onclick="show(this)" data-region="Westschweiz" class="button">Westschweiz</a></li>
-            <li><a href="#" onclick="show(this)" data-region="Mittelland" class="button active">Mittelland</a></li>
+            <li><a href="#" onclick="show(this)" data-region="Mittelland" class="button">Mittelland</a></li>
             <li><a href="#" onclick="show(this)" data-region="Zentralschweiz" class="button">Zentralschweiz</a></li>
             <li><a href="#" onclick="show(this)" data-region="Ostschweiz" class="button">Ostschweiz</a></li>
             <li>
+              <label>Jahr</label>
+              <select id="year"></select>
+              <label>Branche</label>
+              <select id="field">
+              </select>
               <label>Typ</label>
               <select id="type">
                 <option value="abt-total">Ausbildungstyp - Total</option>
-                <option value="EBA">EBA</option>
-                <option value="EFZ">EFZ</option>
+                <option value="EFZ">EFZ: Eidg. Fähigkeitszeugnis</option>
+                <option value="EBA">EBA: Eidg. Berufsattest</option>
               </select>
             </li>
             <li>
@@ -55,13 +60,41 @@
             </li>
           </ul>
         </aside>
-        <main></main>
-        <svg>
-          <g id="Zentralschweiz" transform="translate(-415, -120)"></g>
-          <g id="Mittelland" transform="translate(-265,-45)"></g>
-          <g id="Ostschweiz" transform="translate(-497,-2)"></g>
-          <g id="Westschweiz" transform="translate(-120,-72)"></g>
-        </svg><a class="exit-off-canvas"></a>
+        <main>
+          <div class="info">
+            <ul id="scale">
+              <li>
+                <div class="box"></div>
+                <div class="content"></div>
+              </li>
+              <li>
+                <div class="box"></div>
+                <div class="content"></div>
+              </li>
+              <li>
+                <div class="box"></div>
+                <div class="content"></div>
+              </li>
+              <li>
+                <div class="box"></div>
+                <div class="content"></div>
+              </li>
+              <li>
+                <div class="box"></div>
+                <div class="content"></div>
+              </li>
+            </ul>
+            <p>Jeweils eine Schweizer Region und die gefilterten Daten sind sichtbar<br>Um die Auswahl bzw. die verschiedenen Filter zu ändern einfach oben rechts
+              auf das Zahnrad klicken um zu den Einstellungen zu gelangen.
+            </p>
+          </div>
+          <svg>
+            <g id="Zentralschweiz" transform="translate(-415, -120)"></g>
+            <g id="Mittelland" transform="translate(-265,-45)"></g>
+            <g id="Ostschweiz" transform="translate(-497,-2)"></g>
+            <g id="Westschweiz" transform="translate(-120,-72)"></g>
+          </svg>
+        </main><a class="exit-off-canvas"></a>
       </div>
     </div>
     <script src="js/d3.min.js"></script>

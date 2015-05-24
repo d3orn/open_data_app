@@ -1,0 +1,44 @@
+doctype
+html
+    head
+        meta(charset= "UTF-8")
+        title Document
+        meta(name='viewport', content='user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi')
+        link(rel="stylesheet", href="css/normalize.css")
+        link(rel="stylesheet", href="css/styles.css")
+        script(src="js/vendor/modernizr.js")
+    body
+
+        .off-canvas-wrap(data-offcanvas='')
+            .inner-wrap
+                nav.tab-bar
+                  section.left-small
+                    a.left-off-canvas-toggle.menu-icon(href='#')
+                      span
+                  section.middle.tab-bar-section
+                    h1.title Open Data App
+                aside.left-off-canvas-menu
+                  ul.off-canvas-list
+                    li
+                      label Open Data
+                    li
+                      a(href='/') App
+                    li
+                      a(href='idea.html') Idee
+                    li
+                      a(href='about.html') Über uns
+
+                main
+
+                    .row
+
+
+                a.exit-off-canvas
+
+
+
+        script(src="js/jquery.min.js")
+        script(src="js/foundation.min.js")
+        script(src="js/foundation.offcanvas.js")
+        //- script(src="js/app.js")
+        script $(document).foundation();

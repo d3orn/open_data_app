@@ -1,5 +1,7 @@
 .off-canvas-wrap, .inner-wrap{
   height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 #selector{
@@ -14,7 +16,14 @@
 
   .button{
     @extend .tiny;
+    &.active{
+      background-color: #007095;
+    }
   }
+}
+
+.button.active{
+  background-color: #007095;
 }
 
 i.fi-widget{
@@ -27,8 +36,8 @@ i.fi-widget{
 svg{
   display: block;
   width: 95%;
-  height: 500px;
-  margin: 15px auto;
+  flex: 2;
+  margin: 0 auto;
 
   @media (min-width: 750px){
     width: 750px;
@@ -43,6 +52,10 @@ g.text{
 // 750< svg anzeigen
 main{
   overflow-y: scroll;
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
 }
 
 // label{
@@ -50,6 +63,8 @@ main{
 //   top: 50px;
 // }
 //
+
+
 .button{
   margin: 0;
 }
@@ -72,5 +87,56 @@ div.tip {
 
   p{
     margin-bottom: 0;
+  }
+}
+
+.profile{
+  @extend .columns;
+  @extend .medium-6;
+
+  margin-top: 20px;
+
+  img{
+    height: 125px;
+    display: block;
+    margin: 0 auto;
+    border-radius: 50%;
+  }
+
+  h2, p{
+    text-align: center;
+  }
+}
+
+.social-bar{
+  list-style-type: none;
+  width: 130px;
+  display: flex;
+  justify-content: space-between;
+  margin: 0 auto;
+  li{
+    font-size: 30px;
+  }
+}
+
+.info{
+  display: flex;
+  align-content: center;
+    #scale{
+    list-style: none;
+    margin: 15px 0 0 15px;
+    min-width: 120px;
+    li .box{
+      width: 20px;
+      height: 20px;
+      float: left;
+      margin-right: 5px;
+    }
+    p{
+      margin: 0;
+    }
+  }
+  p{
+    margin: 15px 15px 0 auto;
   }
 }
