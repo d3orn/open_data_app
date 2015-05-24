@@ -22,7 +22,7 @@ html
                     li
                       label Open Data
                     li
-                      a(href='/') App
+                      a(href='/open_data_app') App
                     li
                       a(href='idea.html') Idee
                     li
@@ -31,7 +31,51 @@ html
                 main
 
                     .row
-
+                      .column.small-12
+                        h2 Grundlagen
+                        p
+                          | Im Rahmen der Vorlesung
+                          a(href="http://www.iwi.unibe.ch/content/studium/veranstaltungen/resource/open_data_veranstaltungen_fs_2015/index_ger.html")
+                            |  Grundlagen von Open Data und praktische Anwendung
+                          |  an der Universität Bern haben wir die Daten über Berufsabschlüsse von Frauen und Männern,
+                          | aufgeteilt in die jeweiligen Berufsgruppen, Ausbildungstyp und Abschlussjahr in den Schweizer
+                          | Kantonen visualisiert. Dabei haben wir die Daten vom
+                          a(href="https://www.pxweb.bfs.admin.ch/Selection.aspx?px_language=de&px_db=px-x-1502020100_103&px_tableid=px-x-1502020100_103\px-x-1502020100_103.px&px_type=PX")
+                            |  Bundesamt für Statistik genommen und diese verarbeitet.
+                          br
+                          | Diese Applikation ist
+                          a(href="https://github.com/d3orn/open_data_app")
+                            |  hier
+                          |  auf Github zu finden.
+                        h2 Ansprüche
+                        p
+                          | Unser Anspruch dabei war, dass die Visualisierung in unserer Applikation vor allem anderen
+                          | „Mobile-tauglich“ ist und demnach unabhängig von der Bildschirmgrösse jederzeit verwendet werden kann.
+                          | Aus diesem Grund ist die Schweiz nicht als ganzes, sondern in vier verschiedene Regionen aufgeteilt,
+                          | damit auch auf Smartphones die Funktionalität und Lesbarkeit gewährleistet ist.
+                          | Die Applikation passt sich jeweils dem verwendeten Bildschirm an und skaliert demnach stufenlos.
+                        h2 Daten
+                        p
+                          | Wir haben uns entschieden, diese Daten zu visualisieren,
+                          | weil wir so übersichtlicher in absoluten Zahlen aufzeigen wollten, welche Kantone
+                          | welche Berufsgruppe hervorbringen und insbesondere waren wir an der Geschlechteraufteilung interessiert.
+                          br
+                          | Die Daten selbst wurden vom Bundestamt für Statistik als CSV bereitgestellt.
+                          | Jedes Jahr entsprach einem File. Dies war ziemlich mühsam und auch das CSV selber war nicht bereinigt.
+                          | Aus diesem Grund entschieden wir uns die Daten zuerst zu bereinigen und dann in einem besseren Format
+                          | auf dem Server abzulegen (JSON).
+                        h2 Filter
+                        p
+                          | Mit Hilfe des Seitenmenüs können alle Parameter (Jahr, Berufsfeld, Abschlusstyp und Geschlecht)
+                          | verändert werden. Dadurch lassen sich besonders gut Jahre oder auch nur die Geschlechter vergleichen.
+                          | Ausserdem lässt sich auch zwischen den verschiedenen Regionen (Ostschweiz, Mittelland, Zentralschweiz und Westschweiz) wechseln.
+                        h2 Fazit
+                        p
+                          | Wir denken, dass noch viel mehr möglich ist, denn unserse Applikation kann so gut wie alle Daten
+                          | welche sich auf die Schweiz beziehen, darstellen.
+                          | Ausserdem haben wir bei der Entwicklung der App sehr viel neues gelernt. Wir haben aber auch
+                          | gemerkt, wie umständlich es sein kann an Statistiken und Daten zu gelangen und dass diese meist nicht
+                          | in einem entwickler-freundlichen Zustand vorhanden sind.
 
                 a.exit-off-canvas
 
